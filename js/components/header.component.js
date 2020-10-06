@@ -20,6 +20,8 @@ export class HeaderComponent extends AbstractComponent{
                                 <div class="logo">ZIMC</div>
                                   <div class="search">
                                       <input class="search-product" type="text">
+                                      <button class="search-ico">
+                                      </button>
                                   </div>
                                   <div class="recent-searches">123</div>
                             </div>

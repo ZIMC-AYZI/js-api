@@ -18,6 +18,8 @@ a {
 }
 
 .header {
+    background-color: #f6fba2;
+    background-image: linear-gradient(315deg, #f6fba2 0%, #20ded3 74%);
     display: flex;
     align-items: center;
     height: 250px;
@@ -27,7 +29,6 @@ a {
 .logo {
     font-size: 50px;
     text-transform: uppercase;
-    padding-right: 15px;
 }
 
 .header-wrapper {
@@ -61,25 +62,24 @@ a {
     outline: none;
     transition:  0.3s;
 }
+.search-product{
+    font-size: 25px;
+    width: 200px;
+}
 .search{
     display: flex;
 }
-.search-product{
-    position: relative;
-}
-.search::after{
-    content: '';
-    position: absolute;
-    z-index: 99;
-    right: -20%;
-    top: 38%;
+.search-ico{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
     background-image: url('../images/search.png');
     background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
     background-position: center;
     background-size: cover;
+    border: none;
 }
+
 .favorite-btn:hover{
     transition: 0.3s;
     background: #226fbe;
