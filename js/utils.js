@@ -26,3 +26,22 @@ export function createElement(template) {
   return element.firstChild
 }
 
+export function isValid(str) {
+  let pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
+
+  if (pattern.test(str)){
+
+    return false
+  } return true
+
+}
+export function noResults() {
+  MAIN_ELEMENT.innerHTML = `<p class="no-result">'There were no properties found for the given location.'</p>`
+}
+
+export function scrollToFirst() {
+  window.scrollBy({
+    top: 250,
+    behavior: 'smooth'
+  });
+}
