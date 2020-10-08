@@ -1,4 +1,6 @@
 import { AbstractComponent } from './abstract.component.js';
+import { insertPosition, renderElement } from '../utils.js';
+
 
 
 export class ItemComponent extends AbstractComponent{
