@@ -1,5 +1,4 @@
 import { AbstractComponent } from './abstract.component.js';
-import { insertPosition, renderElement } from '../utils.js';
 
 
 
@@ -7,11 +6,7 @@ export class ItemComponent extends AbstractComponent{
   constructor(beer) {
     super();
     this.beer = beer;
-    this.image_url = beer.image_url;
-    this.name = beer.name;
-    this.id = beer.id;
-    this.ibu = beer.ibu;
-    this.description = beer.description
+
   }
   _afterCreate() {
 
@@ -20,12 +15,12 @@ export class ItemComponent extends AbstractComponent{
   _getTemplate() {
     return (`<li class="list-item">
     <div class="info">
-      <p class="beer-name">Beer-name : ${this.name}</p>
+      <p class="beer-name">Beer-name : ${this.beer.name}</p>
         <div class="beer-image">
-        <img src="${this.image_url}" alt="">
+        <img src="${this.beer.image_url}" alt="">
         </div>
-      <p class="beer-id">Price : ${this.ibu}</p>
-      <p class="description">${this.description}</p>
+      <p class="beer-id">Price : ${this.beer.ibu}</p>
+      <p class="description">${this.beer.description}</p>
     </div>
     </li>`)
   }

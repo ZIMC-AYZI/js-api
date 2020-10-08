@@ -1,6 +1,6 @@
 import { AbstractComponent } from './abstract.component.js';
 import { request, requestSettings } from '../beer.services.js'
-import { insertPosition, MAIN_ELEMENT, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
+import { insertPosition, MAIN_ELEMENT, keyEnter, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
 import { ListComponent } from './list.component.js';
 
 
@@ -29,7 +29,7 @@ export class HeaderComponent extends AbstractComponent{
     return this.getElement().querySelector('.recent-searches-value')
   }
   checkOnValidValue(e) {
-    if (e.keyCode === 13 || e.target === this.getSearchBtn()){
+    if (e.keyCode === keyEnter || e.target === this.getSearchBtn()){
       this.findBeer()
 
     }
@@ -41,14 +41,14 @@ export class HeaderComponent extends AbstractComponent{
 
     if (isValid(requestSettings.beer_name)){
 
-      this.getInput().style.outline = 'none';
-      this.getRecentSearch().innerHTML = requestSettings.beer_name;
+      this.getInput().classList.remove('not-valid')
+      this.getRecentSearch().insertAdjacentHTML('afterbegin', requestSettings.beer_name);
 
        if (requestSettings.beer_name) {
         this.showAllBeer(request(requestSettings.beer_name));
       }
     } else {
-      this.getInput().style.outline = '2px solid red'
+      this.getInput().classList.add('not-valid');
 
     }
   }
@@ -68,7 +68,7 @@ export class HeaderComponent extends AbstractComponent{
       .then((data) => {
         window.incomingArray = data;
 
-        if (data.length === 0){
+        if (!data.length){
           noResults();
 
         }
@@ -76,7 +76,6 @@ export class HeaderComponent extends AbstractComponent{
           this.createListComponent(data);
           scrollToFirst();
 
-          console.log('myData',data);
         }
       })
   }

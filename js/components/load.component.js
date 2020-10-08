@@ -1,6 +1,5 @@
 import { AbstractComponent } from './abstract.component.js';
 import { request, requestSettings, update } from '../beer.services.js'
-import { MAIN_ELEMENT } from '../utils.js';
 
 
 export class LoadComponent extends AbstractComponent{
@@ -18,7 +17,7 @@ export class LoadComponent extends AbstractComponent{
 
   }
   showOrHideBtn() {
-    if (window.incomingArray.length === 0){
+    if (!window.incomingArray.length){
       this.getElement().style.display = 'none'
     } this.getElement().style.display = 'block'
   }
@@ -29,10 +28,10 @@ export class LoadComponent extends AbstractComponent{
       .then((data) => {
         window.loadMoreArray = data;
         if (incomingArray.length === window.loadMoreArray.length){
-          console.log('no more')
-          console.log(this.getElement())
-          this.getElement().innerHTML = 'no-more'
-          this.getElement().style.background = 'red'
+
+
+          this.getElement().innerHTML = 'no-more';
+          this.getElement().style.background = 'red';
         }
         window.incomingArray = [];
         window.incomingArray.push(...window.loadMoreArray);
