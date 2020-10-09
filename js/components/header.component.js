@@ -2,6 +2,7 @@ import { AbstractComponent } from './abstract.component.js';
 import { request, requestSettings, DEFAULT_PAGE_SIZE } from '../beer.services.js'
 import { insertPosition, MAIN_ELEMENT, keyEnter, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
 import { ListComponent } from './list.component.js';
+import { RecentItemComponent } from './recentItem.component.js';
 
 
 export class HeaderComponent extends AbstractComponent{
@@ -26,25 +27,21 @@ export class HeaderComponent extends AbstractComponent{
   getSearchBtn() {
     return document.querySelector('.search-ico')
   }
-  getRecentSearch() {
-    return this.getElement().querySelector('.recent-searches-value')
-  }
   checkOnValidValue(e) {
     if (e.keyCode === keyEnter || e.target === this.getSearchBtn()){
       this.findBeer()
-
     }
   }
 
   findBeer() {
     requestSettings.per_page = DEFAULT_PAGE_SIZE;
     requestSettings.beer_name = this.getInput().value;
-
     if (isValid(requestSettings.beer_name)){
 
+
+      console.log(window.recentSearches);
       this.showAllBeer(request(requestSettings.beer_name));
       this.getInput().classList.remove('not-valid')
-      this.getRecentSearch().insertAdjacentHTML('afterbegin', requestSettings.beer_name);
 
 
 
@@ -52,6 +49,7 @@ export class HeaderComponent extends AbstractComponent{
       this.getInput().classList.add('not-valid');
 
     }
+    this.render(window.recentSearches)
   }
 
 
@@ -68,18 +66,31 @@ export class HeaderComponent extends AbstractComponent{
       .then(res=> res.json())
       .then((data) => {
         window.incomingArray = data;
-
-
         if (!data.length){
           noResults();
 
         }
         else {
+          window.recentSearches.push(requestSettings.beer_name);
           this.createListComponent(data);
           scrollToFirst();
 
         }
       })
+  }
+
+  getRecentBlock() {
+    return this.getElement().querySelector('.recent-searches')
+  }
+
+  render(array) {
+    this.getRecentBlock().innerHTML = ''
+    array.forEach((el) => {
+        const recentItemComponent = new RecentItemComponent(el),
+          recentItemElement = recentItemComponent.getElement();
+        renderElement(this.getRecentBlock(), recentItemElement, insertPosition.BEFORE_END);
+        recentItemComponent.addEventListeners()
+    })
   }
 
   _getTemplate() {
@@ -93,9 +104,7 @@ export class HeaderComponent extends AbstractComponent{
                                       <button class="search-ico">
                                       </button>
                                   </div>
-                                  <div class="recent-searches">
-                                    <p class="recent-searches-value"></p>
-                                  </div>
+                                  <ul class="recent-searches"></ul>
                             </div>
                         <div class="right-side">
                             <button class="favorite-btn">
