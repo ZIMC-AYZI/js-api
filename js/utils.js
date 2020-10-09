@@ -76,3 +76,25 @@ export function goTop() {
     behavior: 'smooth'
   });
 }
+window.favoriteBeer = [];
+window.currentCount = 0;
+
+export function addItem(btn) {
+  btn.innerHTML = 'delete-item';
+  btn.style.background = 'red';
+  window.currentCount++
+}
+export function deleteItem(btn) {
+  btn.innerHTML = 'buy';
+  btn.style.background = 'green';
+  window.currentCount--
+}
+
+
+export function showOrHideFavoriteButton(btn) {
+  if (!window.favoriteBeer.length){
+    btn.style.opacity = '0.2';
+  } else  {
+    btn.style.opacity = '1';
+  }
+}
