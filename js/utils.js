@@ -1,5 +1,8 @@
+
+
 export const BODY_ELEMENT = document.querySelector('body');
 export const MAIN_ELEMENT = document.querySelector('main');
+export const keyEnter = 13;
 export const insertPosition = {
   BEFORE_BEGIN: 'beforebegin',
   BEFORE_END: 'beforeend'
@@ -36,12 +39,40 @@ export function isValid(str) {
 
 }
 export function noResults() {
-  MAIN_ELEMENT.innerHTML = `<p class="no-result">'There were no properties found for the given location.'</p>`
+  MAIN_ELEMENT.innerHTML = ''
+  MAIN_ELEMENT.insertAdjacentHTML('afterbegin', `<p class="no-result">'There were no properties found for the given location.'</p>`)
 }
 
 export function scrollToFirst() {
   window.scrollBy({
-    top: 250,
+    top: 260,
+    behavior: 'smooth'
+  });
+}
+
+
+window.onscroll = function scrollFunction() {
+  const btn = document.querySelector('.go-top'),
+    loadMore = document.querySelector('.load-more');
+
+  if (document.documentElement.scrollTop > 1000) {
+    btn.style.display = "block";
+  } else {
+    btn.style.display = "none";
+  }
+
+  if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+    loadMore.style.display = "block";
+  } else {
+    loadMore.style.display = "none";
+  }
+};
+
+
+export function goTop() {
+  window.scroll({
+    top: 0,
+    left: 0,
     behavior: 'smooth'
   });
 }
