@@ -7,10 +7,13 @@ export const requestSettings = {
   page: 1
 };
 
+export const DEFAULT_PAGE_SIZE = 5;
+
+export const perPage = requestSettings.per_page;
+
 export function update() {
 
     emitEvent('update',window.incomingArray )
-
 }
 
 export function emitEvent(type, data) {

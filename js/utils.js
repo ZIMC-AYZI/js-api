@@ -39,6 +39,7 @@ export function isValid(str) {
 
 }
 export function noResults() {
+  MAIN_ELEMENT.innerHTML = ''
   MAIN_ELEMENT.insertAdjacentHTML('afterbegin', `<p class="no-result">'There were no properties found for the given location.'</p>`)
 }
 

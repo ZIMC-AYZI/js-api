@@ -1,5 +1,5 @@
 import { AbstractComponent } from './abstract.component.js';
-import { request, requestSettings, update } from '../beer.services.js'
+import { request, requestSettings, update, DEFAULT_PAGE_SIZE } from '../beer.services.js'
 
 
 export class LoadComponent extends AbstractComponent{
@@ -11,7 +11,7 @@ export class LoadComponent extends AbstractComponent{
     this.getElement().addEventListener('click', this.loadMoreBeer.bind(this))
   }
   loadMoreBeer() {
-    requestSettings.per_page += 5;
+    requestSettings.per_page += DEFAULT_PAGE_SIZE;
     this.showMoreBeer(request(requestSettings.beer_name));
 
 

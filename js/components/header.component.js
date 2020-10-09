@@ -1,5 +1,5 @@
 import { AbstractComponent } from './abstract.component.js';
-import { request, requestSettings } from '../beer.services.js'
+import { request, requestSettings, DEFAULT_PAGE_SIZE } from '../beer.services.js'
 import { insertPosition, MAIN_ELEMENT, keyEnter, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
 import { ListComponent } from './list.component.js';
 
@@ -13,6 +13,7 @@ export class HeaderComponent extends AbstractComponent{
     this.getSearchBtn().addEventListener('click', this.checkOnValidValue.bind(this));
     this.getGoTopBtn().addEventListener('click', goTop.bind(this));
   }
+
 
 
   getGoTopBtn() {
@@ -36,17 +37,17 @@ export class HeaderComponent extends AbstractComponent{
   }
 
   findBeer() {
-    requestSettings.per_page = 5;
+    requestSettings.per_page = DEFAULT_PAGE_SIZE;
     requestSettings.beer_name = this.getInput().value;
 
     if (isValid(requestSettings.beer_name)){
 
+      this.showAllBeer(request(requestSettings.beer_name));
       this.getInput().classList.remove('not-valid')
       this.getRecentSearch().insertAdjacentHTML('afterbegin', requestSettings.beer_name);
 
-       if (requestSettings.beer_name) {
-        this.showAllBeer(request(requestSettings.beer_name));
-      }
+
+
     } else {
       this.getInput().classList.add('not-valid');
 
@@ -67,6 +68,7 @@ export class HeaderComponent extends AbstractComponent{
       .then(res=> res.json())
       .then((data) => {
         window.incomingArray = data;
+
 
         if (!data.length){
           noResults();
