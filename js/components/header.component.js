@@ -8,8 +8,16 @@ import { FavoritesComponent } from './favorites.component.js';
 
 export class HeaderComponent extends AbstractComponent{
   _afterCreate() {
-    this.createFavoriteButton()
+    const favoriteComponent = new FavoritesComponent(window.favoriteBeer),
+      favoriteElement = favoriteComponent.getElement();
+    renderElement(this.getContainerForFavorite(), favoriteElement, insertPosition.BEFORE_END)
+    favoriteComponent.addEventListeners()
   }
+
+  getContainerForFavorite() {
+    return this.getElement().querySelector('.right-side')
+  }
+
   addEventListeners() {
     this.getInput().addEventListener('keypress', this.checkOnValidValue.bind(this));
     this.getSearchBtn().addEventListener('click', this.checkOnValidValue.bind(this));
@@ -91,15 +99,6 @@ export class HeaderComponent extends AbstractComponent{
         renderElement(this.getRecentBlock(), recentItemElement, insertPosition.BEFORE_END);
         recentItemComponent.addEventListeners()
     })
-  }
-  createFavoriteButton(){
-    const favoriteComponent = new FavoritesComponent(),
-      favoriteElement = favoriteComponent.getElement();
-    renderElement(this.getContainerForFavorite(), favoriteElement, insertPosition.BEFORE_END)
-  }
-
-  getContainerForFavorite() {
-    return  this.getElement().querySelector('.right-side')
   }
 
 

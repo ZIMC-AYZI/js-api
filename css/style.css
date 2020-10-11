@@ -209,3 +209,76 @@ button.load-more{
     text-transform: uppercase;
     cursor: pointer;
 }
+.overlay{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    align-items: center;
+    background: #fff;
+    opacity: 90%;
+}
+.beer-name-modal,.beer-id-modal,.description-modal{
+    color: #000;
+}
+.beer-name-modal{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.delete-item{
+    padding: 10px 20px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #cecece;
+    background: red;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.info p{
+    padding: 5px 0;
+}
+p.description-modal{
+    font-size: 12px;
+}
+.list-item-modal{
+    background: cornsilk;
+    border: 5px solid #000;
+    border-radius: 9%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 1%;
+}
+.info-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-family: Arial;
+    height: 500px;
+}
+.modal-list{
+    display: flex;
+    justify-content: space-around;
+}
+.close-modal{
+    padding: 10px 20px;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    background: firebrick;
+    border: 1px solid #965353;
+    border-radius: 25%;
+    cursor: pointer;
+    outline: none;
+}
