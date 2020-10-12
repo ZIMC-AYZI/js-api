@@ -10,6 +10,7 @@ export class HeaderComponent extends AbstractComponent{
   _afterCreate() {
     const favoriteComponent = new FavoritesComponent(window.favoriteBeer),
       favoriteElement = favoriteComponent.getElement();
+
     renderElement(this.getContainerForFavorite(), favoriteElement, insertPosition.BEFORE_END)
     favoriteComponent.addEventListeners()
   }
@@ -65,6 +66,7 @@ export class HeaderComponent extends AbstractComponent{
     MAIN_ELEMENT.innerHTML = '';
     const listComponent = new ListComponent(data),
       listElement = listComponent.getElement();
+
     renderElement(MAIN_ELEMENT,listElement,insertPosition.BEFORE_END);
     listComponent.addEventListeners();
   }
@@ -73,14 +75,18 @@ export class HeaderComponent extends AbstractComponent{
     typeOfSearch
       .then(res=> res.json())
       .then((data) => {
+        data.forEach((obj) => {
+          obj.stateBtn = true;
+        });
         window.incomingArray = data;
+
         if (!data.length){
           noResults();
 
         }
         else {
           window.recentSearches.push(requestSettings.beer_name);
-          this.createListComponent(data);
+          this.createListComponent(window.incomingArray);
           scrollToFirst();
 
         }
@@ -96,6 +102,7 @@ export class HeaderComponent extends AbstractComponent{
     array.forEach((el) => {
         const recentItemComponent = new RecentItemComponent(el),
           recentItemElement = recentItemComponent.getElement();
+
         renderElement(this.getRecentBlock(), recentItemElement, insertPosition.BEFORE_END);
         recentItemComponent.addEventListeners()
     })

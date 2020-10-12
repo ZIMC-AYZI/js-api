@@ -1,8 +1,11 @@
 
 
 export const BODY_ELEMENT = document.querySelector('body');
+
 export const MAIN_ELEMENT = document.querySelector('main');
+
 export const keyEnter = 13;
+
 export const insertPosition = {
   BEFORE_BEGIN: 'beforebegin',
   BEFORE_END: 'beforeend'
@@ -24,6 +27,7 @@ export function renderElement(container, element, position) {
 
 export function createElement(template) {
   const element = document.createElement('div');
+
   element.innerHTML = template;
 
   return element.firstChild
@@ -77,19 +81,14 @@ export function goTop() {
   });
 }
 window.favoriteBeer = [];
-window.currentCount = 0;
 
-export function addItem(btn) {
-  btn.innerHTML = 'delete-item';
-  btn.style.background = 'red';
-  window.currentCount++
-}
-export function deleteItem(btn) {
-  btn.innerHTML = 'buy';
-  btn.style.background = 'green';
-  window.currentCount--
-}
 
+
+export function autoCloseModal(modal) {
+  if (!window.favoriteBeer.length) {
+    modal.style.display = 'none';
+  }
+}
 
 export function showOrHideFavoriteButton(btn) {
   if (!window.favoriteBeer.length){

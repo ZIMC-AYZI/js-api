@@ -1,7 +1,6 @@
 import { AbstractComponent } from './abstract.component.js';
-import { showOrHideFavoriteButton, addItem, deleteItem } from '../utils.js'
-import { FavoritesComponent } from './favorites.component.js';
-import { insertPosition, MAIN_ELEMENT, renderElement } from '../utils.js';
+import { showOrHideFavoriteButton } from '../utils.js'
+import { FavoriteAmount, updateModal } from '../beer.services.js'
 
 
 
@@ -12,38 +11,52 @@ export class ItemComponent extends AbstractComponent{
   constructor(beer) {
     super();
     this.beer = beer;
+    this.beer.stateBtn = beer.stateBtn
+
 
   }
   _afterCreate() {
-
+    this.someFunc();
   }
   addEventListeners() {
     this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this))
   }
-  getCountElement() {
-    return document.querySelector('.count')
-  }
 
-  addItemToFavorite() {
-    if (this.getBuyBtn().innerHTML === 'buy'){
-      window.favoriteBeer.push(this.beer);
-      addItem(this.getBuyBtn());
-      console.log(this.beer);
+  someFunc() {
+    const beerBtn = this.getBuyBtn();
 
-      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
-
-
-    } else  if (this.getBuyBtn().innerHTML === 'delete-item'){
-      window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
-      deleteItem(this.getBuyBtn());
-      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
+    if (!this.beer.stateBtn){
+      beerBtn.innerText = 'Remove';
+      beerBtn.classList.remove('add-to-favorite')
+      beerBtn.classList.add('remove-from-favorites');
     }
+  }
+  addItemToFavorite() {
+    const beerBtn = this.getBuyBtn();
+
+    if (this.beer.stateBtn) {
+      this.beer.stateBtn = !this.beer.stateBtn;
+      window.favoriteBeer.push(this.beer);
+      FavoriteAmount();
+      updateModal();
+      beerBtn.innerText = 'Remove';
+      beerBtn.classList.remove('add-to-favorite')
+      beerBtn.classList.add('remove-from-favorites');
+
+    } else {
+      this.beer.stateBtn = !this.beer.stateBtn;
+      window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
+      FavoriteAmount();
+      updateModal();
+      beerBtn.innerText = 'Buy';
+      beerBtn.classList.remove('remove-from-favorites')
+      beerBtn.classList.add('add-to-favorite')
+
+    }
+
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
 
-  getContainerForFavorite() {
-    return document.querySelector('.right-side')
-  }
 
   getFavoriteBtn() {
     return document.querySelector('.favorite-btn')
@@ -62,7 +75,7 @@ export class ItemComponent extends AbstractComponent{
         <img src="${this.beer.image_url}" alt="">
         </div>
       <p class="beer-id">Price : ${this.beer.ibu}</p>
-      <button class="add">buy</button>
+      <button class="add" value="buy">buy</button>
       <p class="description">${this.beer.description}</p>
     </div>
     </li>`)

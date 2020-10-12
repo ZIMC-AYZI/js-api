@@ -13,25 +13,28 @@ export class ListComponent extends AbstractComponent{
   _afterCreate() {
     const loadComponent = new LoadComponent(),
       loadElement = loadComponent.getElement();
+
     renderElement(MAIN_ELEMENT,loadElement,insertPosition.BEFORE_BEGIN);
     loadComponent.addEventListeners();
     this.render(this.data)
   }
   addEventListeners() {
     window.addEventListener('update',this.dataChange.bind(this));
+    window.addEventListener('update-after-modal', this.dataChange.bind(this));
+
 
   }
 
   dataChange(e) {
-    this.getElement().innerHTML = ''
+    this.getElement().innerHTML = '';
     this.render(e.detail.data)
   }
 
   render(array) {
-
     array.forEach((beer) => {
       const itemComponent = new ItemComponent(beer),
         itemElement = itemComponent.getElement();
+
       renderElement(this.getElement(),itemElement,insertPosition.BEFORE_END);
       itemComponent.addEventListeners()
     });

@@ -282,3 +282,9 @@ p.description-modal{
     cursor: pointer;
     outline: none;
 }
+.add-to-favorite {
+    background: green;
+}
+.remove-from-favorites {
+    background: red;
+}
