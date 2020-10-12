@@ -20,6 +20,8 @@ a {
 .header {
     background: url("../images/alc.jpg") no-repeat;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     height: 250px;
     background-size: cover;
@@ -90,14 +92,17 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 60px;
+    height: 100px;
     border: 1px solid #cecece;
     width: 240px;
+    overflow: hidden;
 }
 .recent-searches-value{
-    font-size: 20px;
+    cursor: pointer;
+    font-size: 16px;
     font-family: Arial;
     text-transform: uppercase;
+    padding: 2px 0;
 }
 
 main {

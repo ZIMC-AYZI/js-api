@@ -1,9 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { ItemComponent } from './item.component.js';
-import { insertPosition, renderElement } from '../utils.js';
+import { insertPosition, renderElement, MAIN_ELEMENT } from '../utils.js';
 import { LoadComponent } from './load.component.js';
-import { MAIN_ELEMENT } from '../utils.js';
-
 
 
 export class ListComponent extends AbstractComponent{
