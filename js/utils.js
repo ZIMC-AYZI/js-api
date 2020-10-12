@@ -1,3 +1,4 @@
+import { FavoriteAmount, update, updateModal } from './beer.services.js';
 
 
 export const BODY_ELEMENT = document.querySelector('body');
@@ -5,6 +6,8 @@ export const BODY_ELEMENT = document.querySelector('body');
 export const MAIN_ELEMENT = document.querySelector('main');
 
 export const keyEnter = 13;
+
+export const keyEscape = 27;
 
 export const insertPosition = {
   BEFORE_BEGIN: 'beforebegin',
@@ -97,3 +100,26 @@ export function showOrHideFavoriteButton(btn) {
     btn.style.opacity = '1';
   }
 }
+
+export function addOrRemoveFromFavorite(product,btn) {
+  if (product.stateBtn) {
+    product.stateBtn = !product.stateBtn;
+    window.favoriteBeer.push(product);
+    FavoriteAmount();
+    updateModal();
+    btn.innerText = 'Remove';
+    btn.classList.remove('add-to-favorite');
+    btn.classList.add('remove-from-favorites');
+
+  } else {
+    product.stateBtn = !product.stateBtn;
+    window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== product.id);
+    FavoriteAmount();
+    updateModal();
+    btn.innerText = 'Buy';
+    btn.classList.remove('remove-from-favorites')
+    btn.classList.add('add-to-favorite')
+  }
+}
+// showOrHideFavoriteButton(this.getFavoriteBtn());
+// update()

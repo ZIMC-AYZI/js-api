@@ -47,7 +47,7 @@ export class ModalComponent extends AbstractComponent{
     return (`<div class="overlay">
                 <div class="container">
                     <div class="modal-wrapper">
-                        <button class="close-modal">X</button>
+                        <button class="close-modal">close favorites</button>
                         <ul class="modal-list"></ul>
                     </div>
                 </div>

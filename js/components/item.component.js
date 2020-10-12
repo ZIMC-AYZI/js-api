@@ -1,6 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { showOrHideFavoriteButton } from '../utils.js'
-import { FavoriteAmount, updateModal } from '../beer.services.js'
+import { CurrentModalComponent } from './currentmodal.component.js';
+import { BODY_ELEMENT, insertPosition, renderElement, addOrRemoveFromFavorite } from '../utils.js';
 
 
 
@@ -17,9 +18,11 @@ export class ItemComponent extends AbstractComponent{
   }
   _afterCreate() {
     this.someFunc();
+
   }
   addEventListeners() {
-    this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this))
+    this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this));
+    this.getTitle().addEventListener('click', this.showModalOnClickedItem.bind(this));
   }
 
   someFunc() {
@@ -32,31 +35,29 @@ export class ItemComponent extends AbstractComponent{
     }
   }
   addItemToFavorite() {
-    const beerBtn = this.getBuyBtn();
-
-    if (this.beer.stateBtn) {
-      this.beer.stateBtn = !this.beer.stateBtn;
-      window.favoriteBeer.push(this.beer);
-      FavoriteAmount();
-      updateModal();
-      beerBtn.innerText = 'Remove';
-      beerBtn.classList.remove('add-to-favorite')
-      beerBtn.classList.add('remove-from-favorites');
-
-    } else {
-      this.beer.stateBtn = !this.beer.stateBtn;
-      window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
-      FavoriteAmount();
-      updateModal();
-      beerBtn.innerText = 'Buy';
-      beerBtn.classList.remove('remove-from-favorites')
-      beerBtn.classList.add('add-to-favorite')
-
-    }
-
+    addOrRemoveFromFavorite(this.beer,this.getBuyBtn())
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
 
+  showModalOnClickedItem() {
+    this.createCurrentItemModal(this.beer)
+    this.getModal().style.display = 'block';
+  }
+
+  getModal() {
+    return document.querySelector('.current-modal-overlay')
+  }
+
+  getTitle() {
+    return this.getElement().querySelector('.beer-name')
+  }
+
+  createCurrentItemModal(obj) {
+    const currentModalComponent = new CurrentModalComponent(obj),
+      currentModalElement = currentModalComponent.getElement();
+    renderElement(BODY_ELEMENT,currentModalElement,insertPosition.BEFORE_BEGIN);
+    currentModalComponent.addEventListeners();
+  }
 
   getFavoriteBtn() {
     return document.querySelector('.favorite-btn')

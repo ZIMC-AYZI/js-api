@@ -114,7 +114,7 @@ export class HeaderComponent extends AbstractComponent{
                 <div class="container">
                     <div class="header-wrapper">
                             <div class="center-wrapper">
-                                <div class="logo">XMELEVAR</div>
+                               
                                   <div class="search">
                                       <input class="search-product" type="text">
                                       <button class="search-ico">

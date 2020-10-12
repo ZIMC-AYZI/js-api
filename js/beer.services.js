@@ -38,6 +38,10 @@ export function FavoriteAmount() {
   emitEvent('update-count', window.favoriteBeer)
 }
 
+export function updateCurrentModal() {
+  emitEvent('update-current-modal', window.favoriteBeer)
+}
+
 export function updateModal() {
   emitEvent('update-items-modal', window.favoriteBeer)
 }
