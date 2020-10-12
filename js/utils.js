@@ -97,3 +97,14 @@ export function showOrHideFavoriteButton(btn) {
     btn.style.opacity = '1';
   }
 }
+
+export function buttonToRemove(btn) {
+  btn.innerText = 'Remove';
+  btn.classList.remove('add-to-favorite')
+  btn.classList.add('remove-from-favorites');
+}
+export function buttonToAdd(btn) {
+  btn.innerText = 'Buy';
+  btn.classList.remove('remove-from-favorites')
+  btn.classList.add('add-to-favorite')
+}

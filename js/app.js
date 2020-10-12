@@ -7,15 +7,14 @@ export class appComponent {
   init() {
     const headerComponent = new HeaderComponent(),
       headerElement = headerComponent.getElement();
-
     renderElement(BODY_ELEMENT,headerElement,insertPosition.BEFORE_BEGIN);
     headerComponent.addEventListeners();
 
     const modalComponent = new ModalComponent(),
       modalElement = modalComponent.getElement();
-
     renderElement(BODY_ELEMENT, modalElement, insertPosition.BEFORE_BEGIN);
     modalComponent.addEventListeners();
+
 
   };
 }
