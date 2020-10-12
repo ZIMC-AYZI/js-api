@@ -14,7 +14,7 @@ export class ListComponent extends AbstractComponent{
     const loadComponent = new LoadComponent(),
       loadElement = loadComponent.getElement();
     renderElement(MAIN_ELEMENT,loadElement,insertPosition.BEFORE_BEGIN);
-    loadComponent.addEventListeners()
+    loadComponent.addEventListeners();
     this.render(this.data)
   }
   addEventListeners() {

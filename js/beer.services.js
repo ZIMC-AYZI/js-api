@@ -18,10 +18,15 @@ export function update() {
     emitEvent('update',window.incomingArray )
 }
 
-// export function deleteItem(beer) {
-//   favoriteBeer = favoriteBeer.filter(el => el.id !== beer.id)
-//   emitEvent('delete-item', favoriteBeer)
-// }
+export function deleteFromModal(item) {
+  window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== item.id);
+  emitEvent('delete-item', favoriteBeer)
+}
+
+export function FavoriteAmount() {
+  emitEvent('delete-item', window.favoriteBeer)
+}
+
 
 export function emitEvent(type, data) {
   window.dispatchEvent(new CustomEvent(type, {

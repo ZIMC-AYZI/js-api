@@ -1,5 +1,8 @@
 import { AbstractComponent } from './abstract.component.js';
 import { showOrHideFavoriteButton, addItem, deleteItem } from '../utils.js'
+import { FavoritesComponent } from './favorites.component.js';
+import { insertPosition, MAIN_ELEMENT, renderElement } from '../utils.js';
+
 
 
 
@@ -20,21 +23,27 @@ export class ItemComponent extends AbstractComponent{
   getCountElement() {
     return document.querySelector('.count')
   }
-  addItemToFavorite() {
 
+  addItemToFavorite() {
     if (this.getBuyBtn().innerHTML === 'buy'){
       window.favoriteBeer.push(this.beer);
       addItem(this.getBuyBtn());
-      this.getCountElement().innerHTML = window.currentCount
+      console.log(this.beer);
+
+      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
+
 
     } else  if (this.getBuyBtn().innerHTML === 'delete-item'){
       window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
       deleteItem(this.getBuyBtn());
-      this.getCountElement().innerHTML = window.currentCount
+      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
     }
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
 
+  getContainerForFavorite() {
+    return document.querySelector('.right-side')
+  }
 
   getFavoriteBtn() {
     return document.querySelector('.favorite-btn')
@@ -43,6 +52,7 @@ export class ItemComponent extends AbstractComponent{
   getBuyBtn() {
     return this.getElement().querySelector('.add')
   }
+
 
   _getTemplate() {
     return (`<li class="list-item">
