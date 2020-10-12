@@ -3,11 +3,12 @@ import { request, requestSettings, DEFAULT_PAGE_SIZE } from '../beer.services.js
 import { insertPosition, MAIN_ELEMENT, keyEnter, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
 import { ListComponent } from './list.component.js';
 import { RecentItemComponent } from './recentItem.component.js';
+import { FavoritesComponent } from './favorites.component.js';
 
 
 export class HeaderComponent extends AbstractComponent{
   _afterCreate() {
-
+    this.createFavoriteButton()
   }
   addEventListeners() {
     this.getInput().addEventListener('keypress', this.checkOnValidValue.bind(this));
@@ -39,7 +40,6 @@ export class HeaderComponent extends AbstractComponent{
     if (isValid(requestSettings.beer_name)){
 
 
-      console.log(window.recentSearches);
       this.showAllBeer(request(requestSettings.beer_name));
       this.getInput().classList.remove('not-valid')
 
@@ -92,6 +92,16 @@ export class HeaderComponent extends AbstractComponent{
         recentItemComponent.addEventListeners()
     })
   }
+  createFavoriteButton(){
+    const favoriteComponent = new FavoritesComponent(),
+      favoriteElement = favoriteComponent.getElement();
+    renderElement(this.getContainerForFavorite(), favoriteElement, insertPosition.BEFORE_END)
+  }
+
+  getContainerForFavorite() {
+    return  this.getElement().querySelector('.right-side')
+  }
+
 
   _getTemplate() {
     return (`<header class="header">
@@ -107,9 +117,7 @@ export class HeaderComponent extends AbstractComponent{
                                   <ul class="recent-searches"></ul>
                             </div>
                         <div class="right-side">
-                            <button class="favorite-btn">
-                        Favorites
-                            </button>
+                            
                         </div>
                     </div>
                 </div>

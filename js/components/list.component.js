@@ -19,6 +19,7 @@ export class ListComponent extends AbstractComponent{
   }
   addEventListeners() {
     window.addEventListener('update',this.dataChange.bind(this));
+
   }
 
   dataChange(e) {
@@ -32,6 +33,7 @@ export class ListComponent extends AbstractComponent{
       const itemComponent = new ItemComponent(beer),
         itemElement = itemComponent.getElement();
       renderElement(this.getElement(),itemElement,insertPosition.BEFORE_END);
+      itemComponent.addEventListeners()
     });
 
   }

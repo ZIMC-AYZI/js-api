@@ -47,9 +47,10 @@ a {
     align-items: center;
 }
 .right-side{
-    margin-left: 20%;
+    margin-left: 10%;
 }
 .favorite-btn{
+    opacity: 0.2;
     border: 2px dashed #000;
     border-radius: 60px;
     color: #000;
@@ -197,4 +198,14 @@ button.load-more{
     font-family: Arial, sans-serif;
     font-size: 15px;
     padding: 5px 0;
+}
+.add{
+    padding: 10px 20px;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #cecece;
+    background: green;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
 }
