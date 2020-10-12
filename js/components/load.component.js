@@ -26,6 +26,9 @@ export class LoadComponent extends AbstractComponent{
     typeOfSearch
       .then(res=> res.json())
       .then((data) => {
+        data.map((obj) => {
+          obj.stateBtn = true;
+        });
         window.loadMoreArray = data;
         if (incomingArray.length === window.loadMoreArray.length){
 

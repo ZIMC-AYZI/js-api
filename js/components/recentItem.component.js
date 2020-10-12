@@ -7,7 +7,6 @@ export class RecentItemComponent extends AbstractComponent{
   constructor(value) {
     super();
     this.value = value;
-    console.log(this.value,'valueRecent')
   }
   addEventListeners() {
     this.getElement().addEventListener('click',this.showCurrentData.bind(this))
@@ -28,6 +27,9 @@ export class RecentItemComponent extends AbstractComponent{
     typeOfSearch
       .then(res=> res.json())
       .then((data) => {
+        data.map((obj) => {
+          obj.stateBtn = true;
+        });
         window.incomingArray = data;
         update()
 

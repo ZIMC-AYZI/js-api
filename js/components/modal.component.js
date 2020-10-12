@@ -3,21 +3,21 @@ import { insertPosition, renderElement } from '../utils.js';
 import { FavoriteItemsComponent } from './favoriteItems.component.js';
 
 export class ModalComponent extends AbstractComponent{
-  constructor(beer) {
+  constructor() {
     super();
-    this.beer = beer;
+
 
   }
   addEventListeners() {
-    window.addEventListener('delete-item', this.dataChange.bind(this))
-    this.getCloseModalBtn().addEventListener('click', this.closeModalWindow.bind(this))
+    window.addEventListener('delete-item', this.dataChange.bind(this));
+    window.addEventListener('update-items-modal', this.dataChange.bind(this));
+    this.getCloseModalBtn().addEventListener('click', this.closeModalWindow.bind(this));
   }
   _afterCreate() {
     this.render(window.favoriteBeer)
   }
   dataChange(e){
     this.render(e.detail.data);
-    console.log(this.getElement().firstChild)
   }
   getCloseModalBtn() {
     return this.getElement().querySelector('.close-modal')
@@ -37,6 +37,7 @@ export class ModalComponent extends AbstractComponent{
     array.forEach((el) => {
       const favoriteItemsComponent = new FavoriteItemsComponent(el),
         favoriteItemsElement = favoriteItemsComponent.getElement();
+
       renderElement(this.getContainerForFavorite(),favoriteItemsElement,insertPosition.BEFORE_END);
       favoriteItemsComponent.addEventListeners()
     });

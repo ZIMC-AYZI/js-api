@@ -1,7 +1,6 @@
 import { AbstractComponent } from './abstract.component.js';
-import { showOrHideFavoriteButton, addItem, deleteItem } from '../utils.js'
-import { FavoritesComponent } from './favorites.component.js';
-import { insertPosition, MAIN_ELEMENT, renderElement } from '../utils.js';
+import { showOrHideFavoriteButton, buttonToRemove, buttonToAdd } from '../utils.js'
+import { FavoriteAmount, updateModal } from '../beer.services.js'
 
 
 
@@ -13,37 +12,40 @@ export class ItemComponent extends AbstractComponent{
     super();
     this.beer = beer;
 
+
+
   }
   _afterCreate() {
-
+    if (!this.beer.stateBtn){
+      buttonToRemove(this.getBuyBtn())
+    }
   }
   addEventListeners() {
     this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this))
-  }
-  getCountElement() {
-    return document.querySelector('.count')
+
   }
 
   addItemToFavorite() {
-    if (this.getBuyBtn().innerHTML === 'buy'){
+
+    if (this.beer.stateBtn) {
+      this.beer.stateBtn = !this.beer.stateBtn;
       window.favoriteBeer.push(this.beer);
-      addItem(this.getBuyBtn());
-      console.log(this.beer);
+      FavoriteAmount();
+      updateModal();
+      buttonToRemove(this.getBuyBtn())
 
-      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
-
-
-    } else  if (this.getBuyBtn().innerHTML === 'delete-item'){
+    } else {
+      this.beer.stateBtn = !this.beer.stateBtn;
       window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
-      deleteItem(this.getBuyBtn());
-      this.getCountElement().innerHTML = 'favorites ' + window.currentCount
+      FavoriteAmount();
+      updateModal();
+      buttonToAdd(this.getBuyBtn())
+
     }
+
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
 
-  getContainerForFavorite() {
-    return document.querySelector('.right-side')
-  }
 
   getFavoriteBtn() {
     return document.querySelector('.favorite-btn')
@@ -62,7 +64,7 @@ export class ItemComponent extends AbstractComponent{
         <img src="${this.beer.image_url}" alt="">
         </div>
       <p class="beer-id">Price : ${this.beer.ibu}</p>
-      <button class="add">buy</button>
+      <button class="add" value="buy">buy</button>
       <p class="description">${this.beer.description}</p>
     </div>
     </li>`)

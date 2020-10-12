@@ -1,5 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
-import { deleteFromModal } from '../beer.services.js';
+import { FavoriteAmount, updateMainAfterModal, deleteFromModal } from '../beer.services.js';
+import { autoCloseModal } from '../utils.js';
+
 
 export class FavoriteItemsComponent extends AbstractComponent{
   constructor(beer) {
@@ -10,14 +12,20 @@ export class FavoriteItemsComponent extends AbstractComponent{
     this.getDeleteButton().addEventListener('click', this.deleteCurrentFromFavorites.bind(this))
   }
   deleteCurrentFromFavorites() {
+    this.beer.stateBtn = !this.beer.stateBtn;
+
     deleteFromModal(this.beer);
-    window.currentCount--
-    this.getCountElement().innerHTML = 'favorites ' + window.currentCount
-    console.log(favoriteBeer)
+    updateMainAfterModal(this.beer);
+
+    FavoriteAmount();
+    autoCloseModal(this.getModal());
+
+
   }
-  getCountElement() {
-    return document.querySelector('.count')
+  getModal() {
+    return document.querySelector('.overlay')
   }
+
   getDeleteButton() {
     return this.getElement().querySelector('.delete-item')
   }
