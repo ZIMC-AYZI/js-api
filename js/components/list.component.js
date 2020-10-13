@@ -4,7 +4,7 @@ import { insertPosition, renderElement, MAIN_ELEMENT } from '../utils.js';
 import { LoadComponent } from './load.component.js';
 
 
-export class ListComponent extends AbstractComponent{
+export class ListComponent extends AbstractComponent {
   constructor(BeerData) {
     super();
     this.data = BeerData;
@@ -14,12 +14,13 @@ export class ListComponent extends AbstractComponent{
     const loadComponent = new LoadComponent(),
       loadElement = loadComponent.getElement();
 
-    renderElement(MAIN_ELEMENT,loadElement,insertPosition.BEFORE_BEGIN);
+    renderElement(MAIN_ELEMENT, loadElement, insertPosition.BEFORE_BEGIN);
     loadComponent.addEventListeners();
     this.render(this.data)
   }
+
   addEventListeners() {
-    window.addEventListener('update',this.dataChange.bind(this));
+    window.addEventListener('update', this.dataChange.bind(this));
     window.addEventListener('update-after-modal', this.dataChange.bind(this));
 
 
@@ -35,7 +36,7 @@ export class ListComponent extends AbstractComponent{
       const itemComponent = new ItemComponent(beer),
         itemElement = itemComponent.getElement();
 
-      renderElement(this.getElement(),itemElement,insertPosition.BEFORE_END);
+      renderElement(this.getElement(), itemElement, insertPosition.BEFORE_END);
       itemComponent.addEventListeners()
     });
 

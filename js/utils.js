@@ -1,4 +1,4 @@
-import { FavoriteAmount, update, updateModal } from './beer.services.js';
+import { FavoriteAmount, updateModal } from './beer.services.js';
 
 
 export const BODY_ELEMENT = document.querySelector('body');
@@ -39,14 +39,14 @@ export function createElement(template) {
 export function isValid(str) {
   let pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/);
 
-  if (pattern.test(str)){
-
+  if (pattern.test(str)) {
     return false
-  } return true
-
+  }
+  return true
 }
+
 export function noResults() {
-  MAIN_ELEMENT.innerHTML = ''
+  MAIN_ELEMENT.innerHTML = '';
   MAIN_ELEMENT.insertAdjacentHTML('afterbegin', `<p class="no-result">'There were no properties found for the given location.'</p>`)
 }
 
@@ -83,28 +83,32 @@ export function goTop() {
     behavior: 'smooth'
   });
 }
+
 window.favoriteBeer = [];
 
 
-
 export function autoCloseModal(modal) {
+
   if (!window.favoriteBeer.length) {
     modal.style.display = 'none';
   }
 }
 
 export function showOrHideFavoriteButton(btn) {
-  if (!window.favoriteBeer.length){
+
+  if (!window.favoriteBeer.length) {
     btn.style.opacity = '0.2';
-  } else  {
+  } else {
     btn.style.opacity = '1';
   }
 }
 
-export function addOrRemoveFromFavorite(product,btn) {
+export function addOrRemoveFromFavorite(product, btn) {
+
   if (product.stateBtn) {
     product.stateBtn = !product.stateBtn;
     window.favoriteBeer.push(product);
+    localStorage.setItem('localFavorite', JSON.stringify(window.favoriteBeer));
     FavoriteAmount();
     updateModal();
     btn.innerText = 'Remove';
@@ -121,5 +125,4 @@ export function addOrRemoveFromFavorite(product,btn) {
     btn.classList.add('add-to-favorite')
   }
 }
-// showOrHideFavoriteButton(this.getFavoriteBtn());
-// update()
+

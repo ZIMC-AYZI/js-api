@@ -1,18 +1,32 @@
 import { AbstractComponent } from './abstract.component.js';
 import { request, requestSettings, DEFAULT_PAGE_SIZE } from '../beer.services.js'
-import { insertPosition, MAIN_ELEMENT, keyEnter, renderElement, noResults, isValid, scrollToFirst, goTop } from '../utils.js';
+import {
+  insertPosition,
+  MAIN_ELEMENT,
+  keyEnter,
+  renderElement,
+  noResults,
+  isValid,
+  scrollToFirst,
+  goTop
+} from '../utils.js';
 import { ListComponent } from './list.component.js';
 import { RecentItemComponent } from './recentItem.component.js';
 import { FavoritesComponent } from './favorites.component.js';
 
 
-export class HeaderComponent extends AbstractComponent{
+export class HeaderComponent extends AbstractComponent {
   _afterCreate() {
     const favoriteComponent = new FavoritesComponent(window.favoriteBeer),
       favoriteElement = favoriteComponent.getElement();
 
     renderElement(this.getContainerForFavorite(), favoriteElement, insertPosition.BEFORE_END)
     favoriteComponent.addEventListeners()
+
+    if (localStorage.length !== 0) {
+      window.recentSearches = JSON.parse(localStorage.getItem('localRecentSearches'))
+      this.render(window.recentSearches)
+    }
   }
 
   getContainerForFavorite() {
@@ -26,7 +40,6 @@ export class HeaderComponent extends AbstractComponent{
   }
 
 
-
   getGoTopBtn() {
     return document.querySelector('.go-top')
   }
@@ -34,11 +47,14 @@ export class HeaderComponent extends AbstractComponent{
   getInput() {
     return document.querySelector('.search-product')
   }
+
   getSearchBtn() {
     return document.querySelector('.search-ico')
   }
+
   checkOnValidValue(e) {
-    if (e.keyCode === keyEnter || e.target === this.getSearchBtn()){
+
+    if (e.keyCode === keyEnter || e.target === this.getSearchBtn()) {
       this.findBeer()
     }
   }
@@ -46,13 +62,11 @@ export class HeaderComponent extends AbstractComponent{
   findBeer() {
     requestSettings.per_page = DEFAULT_PAGE_SIZE;
     requestSettings.beer_name = this.getInput().value;
-    if (isValid(requestSettings.beer_name)){
 
-
+    if (isValid(requestSettings.beer_name)) {
+      localStorage.setItem('localRecentSearches', JSON.stringify(recentSearches));
       this.showAllBeer(request(requestSettings.beer_name));
       this.getInput().classList.remove('not-valid')
-
-
 
     } else {
       this.getInput().classList.add('not-valid');
@@ -67,24 +81,23 @@ export class HeaderComponent extends AbstractComponent{
     const listComponent = new ListComponent(data),
       listElement = listComponent.getElement();
 
-    renderElement(MAIN_ELEMENT,listElement,insertPosition.BEFORE_END);
+    renderElement(MAIN_ELEMENT, listElement, insertPosition.BEFORE_END);
     listComponent.addEventListeners();
   }
 
   showAllBeer(typeOfSearch) {
     typeOfSearch
-      .then(res=> res.json())
+      .then(res => res.json())
       .then((data) => {
         data.forEach((obj) => {
           obj.stateBtn = true;
         });
         window.incomingArray = data;
 
-        if (!data.length){
+        if (!data.length) {
           noResults();
 
-        }
-        else {
+        } else {
           window.recentSearches.push(requestSettings.beer_name);
           this.createListComponent(window.incomingArray);
           scrollToFirst();
@@ -98,13 +111,13 @@ export class HeaderComponent extends AbstractComponent{
   }
 
   render(array) {
-    this.getRecentBlock().innerHTML = ''
+    this.getRecentBlock().innerHTML = '';
     array.forEach((el) => {
-        const recentItemComponent = new RecentItemComponent(el),
-          recentItemElement = recentItemComponent.getElement();
+      const recentItemComponent = new RecentItemComponent(el),
+        recentItemElement = recentItemComponent.getElement();
 
-        renderElement(this.getRecentBlock(), recentItemElement, insertPosition.BEFORE_END);
-        recentItemComponent.addEventListeners()
+      renderElement(this.getRecentBlock(), recentItemElement, insertPosition.BEFORE_END);
+      recentItemComponent.addEventListeners()
     })
   }
 

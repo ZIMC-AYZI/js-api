@@ -1,14 +1,15 @@
 import { AbstractComponent } from './abstract.component.js';
-import { showOrHideFavoriteButton } from '../utils.js'
 import { CurrentModalComponent } from './currentmodal.component.js';
-import { BODY_ELEMENT, insertPosition, renderElement, addOrRemoveFromFavorite } from '../utils.js';
+import {
+  BODY_ELEMENT,
+  insertPosition,
+  renderElement,
+  addOrRemoveFromFavorite,
+  showOrHideFavoriteButton
+} from '../utils.js';
 
 
-
-
-
-
-export class ItemComponent extends AbstractComponent{
+export class ItemComponent extends AbstractComponent {
   constructor(beer) {
     super();
     this.beer = beer;
@@ -16,26 +17,30 @@ export class ItemComponent extends AbstractComponent{
 
 
   }
+
   _afterCreate() {
-    this.someFunc();
+    this.checkButtonsONState();
 
   }
+
   addEventListeners() {
-    this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this));
+    this.getBuyBtn().addEventListener('click', this.addItemToFavorite.bind(this));
     this.getTitle().addEventListener('click', this.showModalOnClickedItem.bind(this));
   }
 
-  someFunc() {
+  checkButtonsONState() {
     const beerBtn = this.getBuyBtn();
 
-    if (!this.beer.stateBtn){
+    if (!this.beer.stateBtn) {
       beerBtn.innerText = 'Remove';
       beerBtn.classList.remove('add-to-favorite')
       beerBtn.classList.add('remove-from-favorites');
     }
+
   }
+
   addItemToFavorite() {
-    addOrRemoveFromFavorite(this.beer,this.getBuyBtn())
+    addOrRemoveFromFavorite(this.beer, this.getBuyBtn())
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
 
@@ -55,7 +60,7 @@ export class ItemComponent extends AbstractComponent{
   createCurrentItemModal(obj) {
     const currentModalComponent = new CurrentModalComponent(obj),
       currentModalElement = currentModalComponent.getElement();
-    renderElement(BODY_ELEMENT,currentModalElement,insertPosition.BEFORE_BEGIN);
+    renderElement(BODY_ELEMENT, currentModalElement, insertPosition.BEFORE_BEGIN);
     currentModalComponent.addEventListeners();
   }
 
@@ -71,13 +76,13 @@ export class ItemComponent extends AbstractComponent{
   _getTemplate() {
     return (`<li class="list-item">
     <div class="info">
-      <p class="beer-name">Beer-name : ${this.beer.name}</p>
+      <p class="beer-name">Beer-name : ${ this.beer.name }</p>
         <div class="beer-image">
-        <img src="${this.beer.image_url}" alt="">
+        <img src="${ this.beer.image_url }" alt="">
         </div>
-      <p class="beer-id">Price : ${this.beer.ibu}</p>
-      <button class="add" value="buy">buy</button>
-      <p class="description">${this.beer.description}</p>
+      <p class="beer-id">Price : ${ this.beer.ibu }</p>
+      <button class="add">buy</button>
+      <p class="description">${ this.beer.description }</p>
     </div>
     </li>`)
   }
