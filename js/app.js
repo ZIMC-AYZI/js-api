@@ -1,6 +1,7 @@
 import { HeaderComponent } from './components/header.component.js'
 import { BODY_ELEMENT, insertPosition, renderElement } from './utils.js';
 import { ModalComponent } from './components/modal.component.js';
+import { CurrentModalComponent } from './components/currentmodal.component.js';
 
 
 export class appComponent {

@@ -1,6 +1,11 @@
 import { AbstractComponent } from './abstract.component.js';
+
+import { showOrHideFavoriteButton } from '../utils.js'
+import { CurrentModalComponent } from './currentmodal.component.js';
+
 import { showOrHideFavoriteButton, buttonToRemove, buttonToAdd } from '../utils.js'
 import { FavoriteAmount, updateModal } from '../beer.services.js'
+
 
 
 
@@ -16,6 +21,15 @@ export class ItemComponent extends AbstractComponent{
 
   }
   _afterCreate() {
+
+    this.someFunc();
+
+  }
+  addEventListeners() {
+    this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this));
+    this.getTitle().addEventListener('click', this.showModalOnClickedItem.bind(this));
+  }
+
     if (!this.beer.stateBtn){
       buttonToRemove(this.getBuyBtn())
     }
@@ -23,9 +37,20 @@ export class ItemComponent extends AbstractComponent{
   addEventListeners() {
     this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this))
 
+
   }
 
   addItemToFavorite() {
+
+    addOrRemoveFromFavorite(this.beer,this.getBuyBtn())
+    showOrHideFavoriteButton(this.getFavoriteBtn())
+  }
+
+  showModalOnClickedItem() {
+    this.createCurrentItemModal(this.beer)
+    this.getModal().style.display = 'block';
+  }
+
 
     if (this.beer.stateBtn) {
       this.beer.stateBtn = !this.beer.stateBtn;
@@ -41,11 +66,21 @@ export class ItemComponent extends AbstractComponent{
       updateModal();
       buttonToAdd(this.getBuyBtn())
 
-    }
 
-    showOrHideFavoriteButton(this.getFavoriteBtn())
+  getModal() {
+    return document.querySelector('.current-modal-overlay')
   }
 
+  getTitle() {
+    return this.getElement().querySelector('.beer-name')
+  }
+
+  createCurrentItemModal(obj) {
+    const currentModalComponent = new CurrentModalComponent(obj),
+      currentModalElement = currentModalComponent.getElement();
+    renderElement(BODY_ELEMENT,currentModalElement,insertPosition.BEFORE_BEGIN);
+    currentModalComponent.addEventListeners();
+  }
 
   getFavoriteBtn() {
     return document.querySelector('.favorite-btn')

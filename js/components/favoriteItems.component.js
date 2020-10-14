@@ -38,7 +38,7 @@ export class FavoriteItemsComponent extends AbstractComponent{
                       </div>
                           <p class="beer-id-modal">Price : ${this.beer.ibu}</p>
                           <p class="description-modal">${this.beer.description}</p>
-                          <button class="delete-item">delete</button>
+                          <button class="delete-item">Remove</button>
                       </div>
                     </li>`)
   }
