@@ -101,6 +101,7 @@ export function showOrHideFavoriteButton(btn) {
   }
 }
 
+
 export function addOrRemoveFromFavorite(product,btn) {
   if (product.stateBtn) {
     product.stateBtn = !product.stateBtn;
@@ -121,5 +122,15 @@ export function addOrRemoveFromFavorite(product,btn) {
     btn.classList.add('add-to-favorite')
   }
 }
-// showOrHideFavoriteButton(this.getFavoriteBtn());
-// update()
+
+
+export function buttonToRemove(btn) {
+  btn.innerText = 'Remove';
+  btn.classList.remove('add-to-favorite')
+  btn.classList.add('remove-from-favorites');
+}
+export function buttonToAdd(btn) {
+  btn.innerText = 'Buy';
+  btn.classList.remove('remove-from-favorites')
+  btn.classList.add('add-to-favorite')
+

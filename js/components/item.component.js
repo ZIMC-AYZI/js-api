@@ -1,7 +1,11 @@
 import { AbstractComponent } from './abstract.component.js';
+
 import { showOrHideFavoriteButton } from '../utils.js'
 import { CurrentModalComponent } from './currentmodal.component.js';
-import { BODY_ELEMENT, insertPosition, renderElement, addOrRemoveFromFavorite } from '../utils.js';
+
+import { showOrHideFavoriteButton, buttonToRemove, buttonToAdd } from '../utils.js'
+import { FavoriteAmount, updateModal } from '../beer.services.js'
+
 
 
 
@@ -12,11 +16,12 @@ export class ItemComponent extends AbstractComponent{
   constructor(beer) {
     super();
     this.beer = beer;
-    this.beer.stateBtn = beer.stateBtn
+
 
 
   }
   _afterCreate() {
+
     this.someFunc();
 
   }
@@ -25,16 +30,18 @@ export class ItemComponent extends AbstractComponent{
     this.getTitle().addEventListener('click', this.showModalOnClickedItem.bind(this));
   }
 
-  someFunc() {
-    const beerBtn = this.getBuyBtn();
-
     if (!this.beer.stateBtn){
-      beerBtn.innerText = 'Remove';
-      beerBtn.classList.remove('add-to-favorite')
-      beerBtn.classList.add('remove-from-favorites');
+      buttonToRemove(this.getBuyBtn())
     }
   }
+  addEventListeners() {
+    this.getBuyBtn().addEventListener('click',this.addItemToFavorite.bind(this))
+
+
+  }
+
   addItemToFavorite() {
+
     addOrRemoveFromFavorite(this.beer,this.getBuyBtn())
     showOrHideFavoriteButton(this.getFavoriteBtn())
   }
@@ -43,6 +50,22 @@ export class ItemComponent extends AbstractComponent{
     this.createCurrentItemModal(this.beer)
     this.getModal().style.display = 'block';
   }
+
+
+    if (this.beer.stateBtn) {
+      this.beer.stateBtn = !this.beer.stateBtn;
+      window.favoriteBeer.push(this.beer);
+      FavoriteAmount();
+      updateModal();
+      buttonToRemove(this.getBuyBtn())
+
+    } else {
+      this.beer.stateBtn = !this.beer.stateBtn;
+      window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== this.beer.id);
+      FavoriteAmount();
+      updateModal();
+      buttonToAdd(this.getBuyBtn())
+
 
   getModal() {
     return document.querySelector('.current-modal-overlay')
