@@ -106,23 +106,33 @@ export function showOrHideFavoriteButton(btn) {
 export function addOrRemoveFromFavorite(product, btn) {
 
   if (product.stateBtn) {
-    product.stateBtn = !product.stateBtn;
-    window.favoriteBeer.push(product);
-    localStorage.setItem('localFavorite', JSON.stringify(window.favoriteBeer));
-    FavoriteAmount();
-    updateModal();
-    btn.innerText = 'Remove';
-    btn.classList.remove('add-to-favorite');
-    btn.classList.add('remove-from-favorites');
+    buttonTrue(product, btn)
 
   } else {
-    product.stateBtn = !product.stateBtn;
-    window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== product.id);
-    FavoriteAmount();
-    updateModal();
-    btn.innerText = 'Buy';
-    btn.classList.remove('remove-from-favorites')
-    btn.classList.add('add-to-favorite')
+    buttonFalse(product, btn)
   }
 }
 
+export function buttonTrue(product, btn) {
+  product.stateBtn = !product.stateBtn;
+  window.favoriteBeer.push(product);
+  localStorage.setItem('localFavorite', JSON.stringify(window.favoriteBeer));
+  FavoriteAmount();
+  updateModal();
+  btn.innerText = 'Remove';
+  btn.classList.remove('add-to-favorite');
+  btn.classList.add('remove-from-favorites');
+}
+
+export function buttonFalse(product, btn) {
+  product.stateBtn = !product.stateBtn;
+  window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== product.id);
+  window.localItem = window.localItem.filter(el => el.id !== product.id);
+  localStorage.setItem('localFavorite', JSON.stringify(window.favoriteBeer));
+
+  FavoriteAmount();
+  updateModal();
+  btn.innerText = 'Buy';
+  btn.classList.remove('remove-from-favorites')
+  btn.classList.add('add-to-favorite')
+}

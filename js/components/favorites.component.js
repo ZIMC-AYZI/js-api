@@ -13,14 +13,13 @@ export class FavoritesComponent extends AbstractComponent {
 
 
     if (localStorage.getItem('localFavorite')) {
-      window.localItem = JSON.parse(localStorage.getItem('localFavorite'))
-      window.favoriteBeer = [...window.favoriteBeer, ...window.localItem]
+      window.localItem = JSON.parse(localStorage.getItem('localFavorite'));
+      window.favoriteBeer = [...window.favoriteBeer, ...window.localItem];
       this.render(window.favoriteBeer);
 
     } else {
       window.favoriteBeer = []
     }
-
     showOrHideFavoriteButton(this.getElement())
 
   }

@@ -1,5 +1,5 @@
 import { AbstractComponent } from './abstract.component.js';
-import { request, requestSettings, DEFAULT_PAGE_SIZE } from '../beer.services.js'
+import { request, requestSettings, DEFAULT_PAGE_SIZE,update } from '../beer.services.js'
 import {
   insertPosition,
   MAIN_ELEMENT,
@@ -56,6 +56,7 @@ export class HeaderComponent extends AbstractComponent {
 
     if (e.keyCode === keyEnter || e.target === this.getSearchBtn()) {
       this.findBeer()
+
     }
   }
 
@@ -99,6 +100,7 @@ export class HeaderComponent extends AbstractComponent {
 
         } else {
           window.recentSearches.push(requestSettings.beer_name);
+          update()
           this.createListComponent(window.incomingArray);
           scrollToFirst();
 

@@ -1,6 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { FavoriteAmount, updateMainAfterModal, deleteFromModal } from '../beer.services.js';
 import { autoCloseModal } from '../utils.js';
+import { update } from '../beer.services.js';
 
 
 export class FavoriteItemsComponent extends AbstractComponent {
@@ -16,9 +17,8 @@ export class FavoriteItemsComponent extends AbstractComponent {
   deleteCurrentFromFavorites() {
     this.beer.stateBtn = !this.beer.stateBtn;
     deleteFromModal(this.beer);
-    updateMainAfterModal(this.beer);
-
     FavoriteAmount();
+    updateMainAfterModal(this.beer);
     autoCloseModal(this.getModal());
 
 
