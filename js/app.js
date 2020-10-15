@@ -16,5 +16,6 @@ export class appComponent {
     renderElement(BODY_ELEMENT, modalElement, insertPosition.BEFORE_BEGIN);
     modalComponent.addEventListeners();
 
+
   };
 }

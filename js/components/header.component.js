@@ -90,7 +90,7 @@ export class HeaderComponent extends AbstractComponent {
     typeOfSearch
       .then(res => res.json())
       .then((data) => {
-        data.forEach((obj) => {
+        data.map((obj) => {
           obj.stateBtn = true;
         });
         window.incomingArray = data;
