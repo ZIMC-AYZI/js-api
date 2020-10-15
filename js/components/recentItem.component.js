@@ -2,14 +2,14 @@ import { AbstractComponent } from './abstract.component.js';
 import { request, update, requestSettings } from '../beer.services.js';
 
 
-
-export class RecentItemComponent extends AbstractComponent{
+export class RecentItemComponent extends AbstractComponent {
   constructor(value) {
     super();
     this.value = value;
   }
+
   addEventListeners() {
-    this.getElement().addEventListener('click',this.showCurrentData.bind(this))
+    this.getElement().addEventListener('click', this.showCurrentData.bind(this))
   }
 
   showCurrentData() {
@@ -25,7 +25,7 @@ export class RecentItemComponent extends AbstractComponent{
 
   recentSearch(typeOfSearch) {
     typeOfSearch
-      .then(res=> res.json())
+      .then(res => res.json())
       .then((data) => {
         data.map((obj) => {
           obj.stateBtn = true;
@@ -37,9 +37,7 @@ export class RecentItemComponent extends AbstractComponent{
   }
 
 
-
-
   _getTemplate() {
-    return (`<li class="recent-searches-value">${this.value}</li>`)
+    return (`<li class="recent-searches-value">${ this.value }</li>`)
   }
 }

@@ -20,6 +20,7 @@ export class AbstractComponent {
       this._element = createElement(this._getTemplate());
       this._afterCreate();
     }
+
     return this._element;
   }
 }

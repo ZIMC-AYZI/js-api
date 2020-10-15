@@ -1,7 +1,7 @@
-
 export function request() {
-  return fetch(`https://api.punkapi.com/v2/beers?page=${requestSettings.page}&per_page=${requestSettings.per_page}&beer_name=${requestSettings.beer_name}`)
+  return fetch(`https://api.punkapi.com/v2/beers?page=${ requestSettings.page }&per_page=${ requestSettings.per_page }&beer_name=${ requestSettings.beer_name }`)
 }
+
 export const requestSettings = {
   beer_name: '',
   per_page: 5,
@@ -10,36 +10,38 @@ export const requestSettings = {
 
 export const DEFAULT_PAGE_SIZE = 5;
 
-export const perPage = requestSettings.per_page;
-
 window.recentSearches = [];
 
-export function update() {
-  if (window.favoriteBeer.length){
-    window.incomingArray.forEach((el) => {
-      window.favoriteBeer.forEach((it) => {
-        if (el.id === it.id) {
-          el.stateBtn = it.stateBtn
-        }
-      })
+export function changeStateBtn(a,b) {
+  let valueBtn = 0;
+  b.forEach((el) => {
+    if (el){
+      valueBtn = el.id;
+      changeState()
+    }
+  });
+  function changeState() {
+    a.forEach((el) => {
+      if (el.id === valueBtn) {
+        el.stateBtn = false;
+      }
     })
   }
-    emitEvent('update',window.incomingArray )
+}
+export function update() {
+  changeStateBtn(window.incomingArray,window.favoriteBeer)
+  emitEvent('update', window.incomingArray)
 }
 
 export function deleteFromModal(item) {
   window.favoriteBeer = window.favoriteBeer.filter(el => el.id !== item.id);
-
+  window.localItem = window.localItem.filter(el => el.id !== item.id)
+  localStorage.setItem('localFavorite', JSON.stringify(window.favoriteBeer));
   emitEvent('delete-item', window.favoriteBeer)
 }
 
 export function FavoriteAmount() {
-
   emitEvent('update-count', window.favoriteBeer)
-}
-
-export function updateCurrentModal() {
-  emitEvent('update-current-modal', window.favoriteBeer)
 }
 
 export function updateModal() {
@@ -47,12 +49,18 @@ export function updateModal() {
 }
 
 export function updateMainAfterModal(currentBeer) {
-  window.incomingArray.forEach((el) => {
-    if (el.id === currentBeer.id){
-      el.stateBtn = currentBeer.stateBtn;
+  try {
+    window.incomingArray.forEach((el) => {
 
-    }
-  });
+      if (el.id === currentBeer.id) {
+        el.stateBtn = currentBeer.stateBtn;
+      }
+    });
+  } catch (e) {
+
+  }
+
+
   emitEvent('update-after-modal', window.incomingArray)
 }
 
